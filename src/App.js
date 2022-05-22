@@ -1,10 +1,13 @@
-import './App.css';
+import { Provider } from "react-redux";
+import "./App.css";
+import { ShoppingCart } from "./components/ShoppingCart";
+import { store } from "./store/store";
 
 function App() {
   return (
-    <div className="App">
-      <h1>Carrito de compras</h1>
-    </div>
+    <Provider store={store}>
+      <ShoppingCart/>
+    </Provider>
   );
 }
 
