@@ -4,35 +4,59 @@ import { getProducts } from "../helpers/getProducts";
 const initialState = {
   products: [],
   cart: [],
-  status: null
+  status: null,
 };
 
 export const productsFetch = createAsyncThunk(
   "products/productsFetch",
-  async() => {
+  async () => {
     const response = await getProducts();
-    return response?.products
+    if (response) {
+      const products = convertData(response.products);
+      return products;
+    }
   }
-)
+);
+
+const convertData = (entities) => {
+  let result = [];
+  if (entities) {
+    entities.forEach((product) => {
+      const entity = {
+        id: product.identificación,
+        name: product.nombre,
+        price: product.precio,
+        quantity: product.cantidad,
+        tempQuantity: 1,
+      };
+      result.push(entity);
+    });
+  }
+  return result;
+};
 
 const productsSlice = createSlice({
   name: "products",
   initialState,
   reducers: {
-    addToCard(state) {
+    addAnAmount(state, action) {
+      const itemIndex = state.products.findIndex(
+        (item) => item.id === action.payload.id
+      );
+
+      let product = state.products[itemIndex];
+      if (product.quantity > product.tempQuantity) product.tempQuantity += 1;
     },
-    removeOneFromCart(state) {
-    },
-    removeAllFromCart(state, action) {
-    },
-    clearCart(state) {
-    },
-    totalCartSum(state) {
-    },
-    createNewProduct(state) {
+    subtractAnAmount(state, action) {
+      const itemIndex = state.products.findIndex(
+        (item) => item.id === action.payload.id
+      );
+
+      let product = state.products[itemIndex];
+      if (product.tempQuantity > 1) product.tempQuantity -= 1;
     },
   },
-  extraReducers:{
+  extraReducers: {
     [productsFetch.pending]: (state, action) => {
       state.status = "pending";
     },
@@ -43,9 +67,9 @@ const productsSlice = createSlice({
     [productsFetch.rejected]: (state, action) => {
       state.status = "rejected";
     },
-  }
+  },
 });
 
-export const { increment, decrement, incrementByAmount } =
+export const { addAnAmount, subtractAnAmount } =
   productsSlice.actions;
 export default productsSlice.reducer;
