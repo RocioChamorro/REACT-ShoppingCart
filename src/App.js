@@ -1,12 +1,12 @@
 import { Provider } from "react-redux";
 import "./App.css";
-import { ShoppingCart } from "./components/ShoppingCart";
+import AppRouter from "./routers/AppRouter";
 import { store } from "./store/store";
 
 function App() {
   return (
     <Provider store={store}>
-      <ShoppingCart/>
+      <AppRouter/>
     </Provider>
   );
 }

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { PRODUCTS } from "../data/products";
+import { getProducts } from "../helpers/getProducts";
 
 const initialState = {
   products: [],
@@ -7,18 +7,10 @@ const initialState = {
   status: null
 };
 
-function getProductsData() {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve(PRODUCTS);
-    }, 2000);
-  });
-}
-
 export const productsFetch = createAsyncThunk(
   "products/productsFetch",
   async() => {
-    const response = await getProductsData();
+    const response = await getProducts();
     return response?.products
   }
 )
