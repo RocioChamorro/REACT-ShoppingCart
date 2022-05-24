@@ -1,6 +1,6 @@
 # Shopping Cart Challenge
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Puede acceder a la aplicación en [ShoppingCartApp](https://rociochamorro.github.io/REACT-ShoppingCart/).
 
 ## Funcionalidad del aplicativo React :
 * Lista los productos de la data JSON
