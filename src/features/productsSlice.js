@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import { getProducts } from "../helpers/getProducts";
 
 const initialState = {
@@ -46,6 +47,7 @@ const productsSlice = createSlice({
 
       let product = state.products[itemIndex];
       if (product.quantity > product.tempQuantity) product.tempQuantity += 1;
+      else toast.info("Solo puede agregar la cantidad disponible del producto", {position: "bottom-left"});
     },
     subtractAnAmount(state, action) {
       const itemIndex = state.products.findIndex(

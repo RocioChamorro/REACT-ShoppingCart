@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 
 const initialState = {
   cartItems: [],
@@ -15,12 +16,19 @@ const cartSlice = createSlice({
         (item) => item.id === action.payload.id
       );
       if (itemIndex >= 0) {
-        state.cartItems[itemIndex].cartQuantity += action.payload.tempQuantity;
+        let tempTotalQuantity = state.cartItems[itemIndex].cartQuantity + action.payload.tempQuantity;
+
+        if (state.cartItems[itemIndex].quantity >= tempTotalQuantity)
+          state.cartItems[itemIndex].cartQuantity += action.payload.tempQuantity;
+        else
+          toast.info("Solo puede agregar la cantidad disponible del producto", {position: "bottom-left"});
+
       } else {
         const tempProduct = {
           ...action.payload,
           cartQuantity: action.payload.tempQuantity,
         };
+
         state.cartItems.push(tempProduct);
       }
     },
@@ -43,7 +51,7 @@ const cartSlice = createSlice({
 
         total += itemTotal;
         return total;
-      },0);
+      }, 0);
       state.cartTotalAmount = total;
     },
     createNewProduct(state) {},

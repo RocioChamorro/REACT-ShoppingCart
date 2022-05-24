@@ -1,5 +1,6 @@
 import { Provider } from "react-redux";
 import "./App.css";
+import 'react-toastify/dist/ReactToastify.css';
 import AppRouter from "./routers/AppRouter";
 import { store } from "./store/store";
 
