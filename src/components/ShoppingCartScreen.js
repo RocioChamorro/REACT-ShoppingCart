@@ -1,12 +1,13 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import {
   addToCard,
   clearCart,
   removeProductFromCart,
   totalCartSum,
 } from "../features/cartSlice";
-import { addAnAmount, subtractAnAmount } from "../features/productsSlice";
+import { addAnAmount, subtractAnAmount, updateProductAvailability } from "../features/productsSlice";
 import { CartItem } from "./CartItem.js";
 import { ProductCard } from "./ProductCard";
 
@@ -38,9 +39,15 @@ export const ShoppingCartScreen = () => {
     dispatch(removeProductFromCart(id));
   };
 
-  const handleClearCart = (id) => {
-    dispatch(clearCart(id));
+  const handleClearCart = () => {
+    dispatch(clearCart());
   };
+
+  const handlePurchase = () => {
+    dispatch(updateProductAvailability(cartItems));
+    handleClearCart();
+    toast.success("Compra exitosa", {position: "bottom-right"});
+  }
 
   return (
     <div>
@@ -86,7 +93,7 @@ export const ShoppingCartScreen = () => {
                 </button>
               </div>
               <div className="col-md-6">
-                <button type="button" className="btn btn-success">
+                <button type="button" className="btn btn-success" onClick={()=>handlePurchase()}>
                   Comprar
                 </button>
               </div>

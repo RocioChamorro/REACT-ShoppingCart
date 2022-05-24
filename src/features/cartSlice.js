@@ -16,20 +16,24 @@ const cartSlice = createSlice({
         (item) => item.id === action.payload.id
       );
       if (itemIndex >= 0) {
-        let tempTotalQuantity = state.cartItems[itemIndex].cartQuantity + action.payload.tempQuantity;
+        let tempTotalQuantity =
+          state.cartItems[itemIndex].cartQuantity + action.payload.tempQuantity;
 
         if (state.cartItems[itemIndex].quantity >= tempTotalQuantity)
-          state.cartItems[itemIndex].cartQuantity += action.payload.tempQuantity;
+          state.cartItems[itemIndex].cartQuantity +=
+            action.payload.tempQuantity;
         else
           toast.info("Solo puede agregar la cantidad disponible del producto", {position: "bottom-left"});
-
       } else {
-        const tempProduct = {
-          ...action.payload,
-          cartQuantity: action.payload.tempQuantity,
-        };
+        if (action.payload.quantity > 0) {
+          const tempProduct = {
+            ...action.payload,
+            cartQuantity: action.payload.tempQuantity,
+          };
 
-        state.cartItems.push(tempProduct);
+          state.cartItems.push(tempProduct);
+        } else
+          toast.info("Solo puede agregar la cantidad disponible del producto", {position: "bottom-left"});
       }
     },
     removeProductFromCart(state, action) {
@@ -53,8 +57,7 @@ const cartSlice = createSlice({
         return total;
       }, 0);
       state.cartTotalAmount = total;
-    },
-    createNewProduct(state) {},
+    }
   },
 });
 

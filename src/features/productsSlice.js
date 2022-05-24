@@ -57,6 +57,15 @@ const productsSlice = createSlice({
       let product = state.products[itemIndex];
       if (product.tempQuantity > 1) product.tempQuantity -= 1;
     },
+    updateProductAvailability(state, action) {
+
+      action.payload.forEach(cartProduct => {
+        const itemIndex = state.products.findIndex(
+          (item) => item.id === cartProduct.id
+        );
+        state.products[itemIndex].quantity -= cartProduct.cartQuantity;
+      });
+    }
   },
   extraReducers: {
     [productsFetch.pending]: (state, action) => {
@@ -72,6 +81,6 @@ const productsSlice = createSlice({
   },
 });
 
-export const { addAnAmount, subtractAnAmount } =
+export const { addAnAmount, subtractAnAmount, updateProductAvailability } =
   productsSlice.actions;
 export default productsSlice.reducer;
