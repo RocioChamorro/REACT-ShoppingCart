@@ -10,6 +10,6 @@ button {
     font-family: $font-mamrope;
 }
 
-nav {
-    background-color: $color-green;
-}
+input:focus{
+    outline:none;
+} 

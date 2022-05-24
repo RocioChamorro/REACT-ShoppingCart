@@ -1,25 +1,35 @@
-@use '/src/scss/abstracts/variables'as *;
+@use "/src/scss/abstracts/variables" as *;
 
 html,
 body {
-    font-family: $font-mamrope;
-    background-color: $base-color;
+  font-family: $font-mamrope;
+  background-color: $base-color;
 }
 
-/* TITLE */
-.shoppingCard-title {
-    color: #CEF0D4;
-    font-family: 'Rouge Script', cursive;
+.shopping-cart-container {
+  nav {
+    background-color: $color-green;
+  }
+  .shoppingCard-title {
+    color: #cef0d4;
+    font-family: "Rouge Script", cursive;
     font-weight: normal;
     text-align: center;
     text-shadow: 1px 1px 2px #082b34;
-}
+  }
 
-.card-header, .card-footer {
+  .card-header,
+  .card-footer {
     background-color: $color-light-green;
-}
+  }
 
-.heroes-loginImage{
+  .productsImage {
     height: 100%;
     width: 100%;
+  }
+
+  .container-transparent {
+    background-color: transparent;
+    border: none;
+  }
 }

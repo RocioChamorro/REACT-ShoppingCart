@@ -1,5 +1,5 @@
 import useForm from "../../src/hooks/useForm";
-import productImg from "../../src/assets/products2.png";
+import productImg from "../../src/assets/products.png";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
@@ -19,8 +19,8 @@ export const NewProductScreen = () => {
   const [{ name, price, quantity }, handleInputChange] = useForm(initialForm);
 
   const handleAddNewProduct = () => {
+    if ( name == "" || price == "" || price < 0 || quantity == "" || quantity < 1 ) return;
 
-    if (name == "" || price < 0 || quantity < 1) return;
     const payload = {
       id: nanoid(),
       name,
@@ -31,19 +31,16 @@ export const NewProductScreen = () => {
 
     dispatch(addNewProduct(payload));
 
-    toast.success("Nuevo producto agregado", {position: "bottom-right"});
-    const lastPath = localStorage.getItem("lastPath") || "/marvel";
-    navigate("/", {
-      replace: true,
-    });
+    toast.success("Nuevo producto agregado", { position: "bottom-right" });
+    navigate("/");
   };
 
   return (
     <div className="row">
-      <div className="col-6">
-        <img src={productImg} className="heroes-loginImage" alt="heroes" />
+      <div className="col-md-6 col-12">
+        <img src={productImg} className="productsImage" alt="productos" />
       </div>
-      <div className="col-6">
+      <div className="col-md-6 col-12">
         <div className="container mt-5">
           <h1 className="shoppingCard-title">Nuevo producto</h1>
           <hr />
@@ -75,7 +72,7 @@ export const NewProductScreen = () => {
                     aria-describedby="priceHelp"
                   />
                   <div id="priceHelp" className="form-text">
-                  Precio del producto más IGV
+                    Precio del producto más IGV
                   </div>
                 </div>
               </div>
@@ -100,7 +97,7 @@ export const NewProductScreen = () => {
               ""
             )}
             <div className="d-grid gap-2 col-6 mx-auto text-center">
-              <button type="submit" className="btn btn-primary">
+              <button type="submit" className="btn btn-success">
                 Agregar nuevo producto
               </button>
             </div>

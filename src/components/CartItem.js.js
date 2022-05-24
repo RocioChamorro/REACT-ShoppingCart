@@ -1,23 +1,26 @@
 import { BsFillTrashFill } from "react-icons/bs";
 
-export const CartItem = ({data, removeProductFromCart}) => {
+export const CartItem = ({ data, removeProductFromCart }) => {
   let { id, name, price, cartQuantity } = data;
 
-  
   const handleSubtotal = () => {
     return price * cartQuantity;
-  }
+  };
 
   return (
-    <div className="row">
-      <div className="col-md-4">{name}</div>
-      <div className="col-md-2">$ {price}</div>
-      <div className="col-md-1">{cartQuantity}</div>
-      <div className="col-md-2">$ {handleSubtotal()}</div>
-      <div className="col-md-2">
-        <button className="fs-5 text-danger" onClick={()=>removeProductFromCart(id)}><BsFillTrashFill /></button>
-        
-      </div>
-    </div>
-  )
-}
+    <>
+      <td>{name}</td>
+      <td className="text-nowrap">$ {price}</td>
+      <td>{cartQuantity}</td>
+      <td className="text-nowrap">$ {handleSubtotal()}</td>
+      <td>
+        <button type="button"
+          className="fs-5 text-danger container-transparent"
+          onClick={() => removeProductFromCart(id)}
+        >
+          <BsFillTrashFill />
+        </button>
+      </td>
+    </>
+  );
+};
