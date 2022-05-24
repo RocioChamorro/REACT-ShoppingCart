@@ -58,13 +58,15 @@ const productsSlice = createSlice({
       if (product.tempQuantity > 1) product.tempQuantity -= 1;
     },
     updateProductAvailability(state, action) {
-
       action.payload.forEach(cartProduct => {
         const itemIndex = state.products.findIndex(
           (item) => item.id === cartProduct.id
         );
         state.products[itemIndex].quantity -= cartProduct.cartQuantity;
       });
+    },
+    addNewProduct(state, action) {
+      state.products.push(action.payload);
     }
   },
   extraReducers: {
@@ -81,6 +83,5 @@ const productsSlice = createSlice({
   },
 });
 
-export const { addAnAmount, subtractAnAmount, updateProductAvailability } =
-  productsSlice.actions;
+export const { addAnAmount, subtractAnAmount, updateProductAvailability, addNewProduct } = productsSlice.actions;
 export default productsSlice.reducer;
